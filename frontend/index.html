@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DomainSentry | Advanced OSINT Platform</title>
+    <meta name="description" content="World-class OSINT platform for monitoring newly registered domains with advanced enrichment, real-time risk scoring, and cyber news aggregation.">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#0f172a" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="DomainSentry | Advanced OSINT Platform" />
+    <meta property="og:description" content="World-class OSINT platform for monitoring newly registered domains with advanced enrichment, real-time risk scoring, and cyber news aggregation." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/og-image.png" />
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="DomainSentry | Advanced OSINT Platform" />
+    <meta name="twitter:description" content="World-class OSINT platform for monitoring newly registered domains with advanced enrichment, real-time risk scoring, and cyber news aggregation." />
+    <meta name="twitter:image" content="/twitter-image.png" />
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#0f172a">
+    
+    <!-- Performance hints -->
+    <link rel="preload" href="/src/main.tsx" as="script" />
+    
+    <!-- Security headers (simulated) -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src 'self' fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' ws://localhost:*;" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- Clerk Loader (will be replaced by Clerk SDK) -->
+    <script>
+      // Clerk configuration will be injected here
+      window.__clerk_config = {
+        publishableKey: import.meta.env.VITE_CLERK_PUBLISHABLE_KEY || '',
+        signInUrl: '/sign-in',
+        signUpUrl: '/sign-up',
+        afterSignInUrl: '/dashboard',
+        afterSignUpUrl: '/dashboard'
+      };
+    </script>
+    
+    <!-- Performance monitoring (optional) -->
+    <script>
+      // Performance monitoring snippet
+      if ('performance' in window) {
+        window.addEventListener('load', () => {
+          const timing = performance.getEntriesByType('navigation')[0];
+          if (timing) {
+            console.log('Page load time:', timing.loadEventEnd - timing.fetchStart, 'ms');
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

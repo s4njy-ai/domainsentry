@@ -1,0 +1,175 @@
+# Pre-commit configuration for DomainSentry
+# Install with: pre-commit install
+
+repos:
+  # Python linting and formatting
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-added-large-files
+      - id: check-merge-conflicts
+      - id: detect-private-key
+      - id: check-ast
+      - id: check-toml
+      - id: check-json
+
+  # Python code formatting
+  - repo: https://github.com/psf/black
+    rev: 23.11.0
+    hooks:
+      - id: black
+        language_version: python3.11
+        args: [--line-length=88]
+
+  # Python import sorting
+  - repo: https://github.com/pycqa/isort
+    rev: 5.12.0
+    hooks:
+      - id: isort
+        args: [--profile=black]
+
+  # Python linting
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.1.6
+    hooks:
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix]
+
+  # Type checking
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.7.0
+    hooks:
+      - id: mypy
+        additional_dependencies: [types-all]
+        exclude: ^tests/
+        args: [--ignore-missing-imports, --no-strict-optional]
+
+  # Security scanning
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.7.7
+    hooks:
+      - id: bandit
+        args: [-ll, --skip, B101, B105, B106, B107]
+
+  # Frontend linting (runs in frontend directory)
+  - repo: local
+    hooks:
+      - id: eslint-frontend
+        name: ESLint Frontend
+        entry: npm run lint
+        language: system
+        pass_filenames: false
+        files: ^frontend/.*\.(ts|tsx)$
+        types: [file]
+
+  # TypeScript type checking
+  - repo: local
+    hooks:
+      - id: typescript-check
+        name: TypeScript Check
+        entry: npm run type-check
+        language: system
+        pass_filenames: false
+        files: ^frontend/.*\.(ts|tsx)$
+        types: [file]
+
+  # YAML validation
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v3.0.3
+    hooks:
+      - id: prettier
+        types_or: [yaml, markdown, dockerfile]
+        exclude: ^(backend/alembic/|frontend/public/)
+
+  # Markdown linting
+  - repo: https://github.com/igorshubovych/markdownlint-cli2
+    rev: v9.2.0
+    hooks:
+      - id: markdownlint-cli2
+        args: [--config, .markdownlint.json]
+
+  # Shell script linting
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: v0.9.0.6
+    hooks:
+      - id: shellcheck
+
+  # Git commit message linting
+  - repo: https://github.com/alessandrojcm/commitlint-pre-commit-hook
+    rev: v9.5.0
+    hooks:
+      - id: commitlint
+        stages: [commit-msg]
+        additional_dependencies: ['@commitlint/config-conventional']
+
+  # Dockerfile linting
+  - repo: https://github.com/hadolint/hadolint
+    rev: v2.12.0
+    hooks:
+      - id: hadolint
+        args: [--ignore, DL3008, --ignore, DL3018]
+
+  # Secret detection
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.4.0
+    hooks:
+      - id: detect-secrets
+        args: [--baseline, .secrets.baseline]
+
+  # SQL injection detection
+  - repo: https://github.com/tsugliani/sql-injection-pre-commit-hook
+    rev: v0.2.0
+    hooks:
+      - id: sql-injection
+        files: \.(py|js|ts|tsx|java)$
+
+  # Jupyter notebook cleaning
+  - repo: https://github.com/kynan/nbstripout
+    rev: 0.6.1
+    hooks:
+      - id: nbstripout
+        files: \.ipynb$
+
+  # Spell checking
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.2.6
+    hooks:
+      - id: codespell
+        args: [--skip, "*.json,*.toml,*.lock", --ignore-words-list, "ans,creat,fo,hist,iff,nin,nd,ot,rouge,sur"]
+
+  # Dependency vulnerability scanning
+  - repo: local
+    hooks:
+      - id: safety-check
+        name: Safety Check
+        entry: safety check
+        language: system
+        pass_filenames: false
+        files: ^(backend/requirements.*\.txt|frontend/package\.json)$
+        types: [file]
+
+# Default configuration
+default_language_version:
+  python: python3.11
+  node: 18.17.0
+
+# Exclude paths
+exclude: >
+  (?x)^(
+    backend/alembic/versions/.*\.py|
+    frontend/public/.*|
+    \.git/.*|
+    __pycache__/.*|
+    node_modules/.*|
+    \.venv/.*|
+    dist/.*|
+    build/.*|
+    \.pytest_cache/.*|
+    \.coverage.*
+  )$
+
+# Fail fast on errors
+fail_fast: false
