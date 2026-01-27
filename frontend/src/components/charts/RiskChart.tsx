@@ -1,15 +1,15 @@
 import React from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
-import { DailyTimelineItem } from '../../lib/types';
+import { RiskTrend } from '../../lib/types';
 
 interface RiskChartProps {
-  trends: DailyTimelineItem[];
+  trends: RiskTrend;
 }
 
 export const RiskChart: React.FC<RiskChartProps> = ({ trends }) => {
   // Transform the data to have consistent field names for the chart
-  const chartData = trends.map(item => ({
+  const chartData = trends.trends.map(item => ({
     date: item.date,
     risk: item.avg_risk_score,
     count: item.domain_count

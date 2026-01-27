@@ -1,6 +1,4 @@
-import React from 'react';
 import { MoonIcon, SunIcon, BellIcon, SearchIcon } from 'lucide-react';
-import { UserButton } from '@clerk/clerk-react';
 
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
@@ -31,7 +29,9 @@ export const Header: React.FC = () => {
         <BellIcon className="h-5 w-5" />
         <span className="sr-only">Toggle notification</span>
       </Button>
-      <UserButton />
+      <div className="h-8 w-8 rounded-full bg-muted flex items-center justify-center">
+        <span className="text-sm font-medium">Demo</span>
+      </div>
     </header>
   );
 };

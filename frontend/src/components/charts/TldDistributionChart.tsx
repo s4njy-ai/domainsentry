@@ -58,19 +58,19 @@ export const TldDistributionChart: React.FC<TldDistributionChartProps> = ({ limi
             nameKey="name"
             label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
           >
-            {chartData.map((entry, index) => (
+            {chartData.map((_, index) => (
               <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
             ))}
           </Pie>
           <Tooltip 
-            formatter={(value, name, props) => [`${value} domains`, 'Count']}
+            formatter={(value) => [`${value} domains`, 'Count']}
             labelFormatter={(value) => `TLD: ${value}`}
           />
           <Legend 
             layout="vertical" 
             verticalAlign="middle" 
             align="right"
-            formatter={(value, entry, index) => {
+            formatter={(value, _, index) => {
               const count = chartData[index]?.count || 0;
               return `${value} (${count})`;
             }}

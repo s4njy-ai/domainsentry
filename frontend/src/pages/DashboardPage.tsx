@@ -1,19 +1,16 @@
-import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { 
   Activity, 
-  TrendingUp, 
   ShieldAlert, 
   Globe,
   BarChart3,
-  Calendar,
   Clock
 } from 'lucide-react';
 
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
 import { Skeleton } from '../components/ui/skeleton';
-import { domainApi } from '../lib/api';
+import { domainApi, riskApi } from '../lib/api';
 import { DomainStats, RiskTrend } from '../lib/types';
 import { RiskChart } from '../components/charts/RiskChart';
 import { TldDistributionChart } from '../components/charts/TldDistributionChart';
@@ -26,7 +23,18 @@ export const DashboardPage: React.FC = () => {
 
   const { data: riskTrends, isLoading: isRiskTrendsLoading } = useQuery({
     queryKey: ['riskTrends'],
-    queryFn: () => riskApi.getRiskTrends(30).then(res => res.data as RiskTrend),
+    queryFn: () => riskApi.getRiskTrends(30).then(res => {
+      // Handle the API response - if it returns an array directly, wrap it in the proper structure
+      const rawData = res.data;
+      if (Array.isArray(rawData)) {
+        return {
+          period_days: 30,
+          trends: rawData as Array<{date: string; avg_risk_score: number; domain_count: number}>,
+          updated_at: new Date().toISOString()
+        };
+      }
+      return rawData as RiskTrend;
+    }),
   });
 
   const renderStatCard = (title: string, value: string | number, icon: React.ReactNode, color: string) => (
@@ -153,7 +161,7 @@ export const DashboardPage: React.FC = () => {
             {isRiskTrendsLoading ? (
               <Skeleton className="h-64 w-full" />
             ) : riskTrends ? (
-              <RiskChart trends={riskTrends.trends} />
+              <RiskChart trends={riskTrends} />
             ) : null}
           </CardContent>
         </Card>
