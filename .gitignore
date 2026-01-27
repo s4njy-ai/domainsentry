@@ -1,0 +1,145 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Database
+*.db
+*.sqlite3
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Frontend
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+dist/
+out/
+.next/
+.nuxt/
+
+# Coverage
+.coverage
+htmlcov/
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Jupyter
+.ipynb_checkpoints
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pytype static type analyzer
+.pytype/
+
+# profiling data
+.prof
+
+# Redis dump
+dump.rdb
+
+# Docker
+docker-compose.override.yml
+
+# Testing
+test-results/
+junit.xml
+
+# Secrets
+secrets.yml
+*.pem
+*.key
+*.cert
+
+# Temporary files
+temp/
+tmp/
+
+# Backup files
+*.bak
+*.backup
+
+# IDE
+.project
+.classpath
+.settings/
+.factorypath
+
+# Compiled docs
+site/
+
+# Sphinx
+_build/
+_static/
+_templates/
+
+# Mkdocs
+site/
+
+# Pycharm
+.idea/
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store

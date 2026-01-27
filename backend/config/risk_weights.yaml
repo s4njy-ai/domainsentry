@@ -1,0 +1,79 @@
+# Risk scoring weights configuration for DomainSentry
+# Adjust these values to customize risk assessment behavior
+# Higher values mean greater influence on final risk score
+
+weights:
+  # Weight for domain length risk (very long or very short domains)
+  domain_length: 0.15
+  
+  # Weight for character entropy (random-looking domains)
+  entropy_score: 0.25
+  
+  # Weight for suspicious TLDs (.tk, .ml, .ga, etc.)
+  tld_risk: 0.20
+  
+  # Weight for high-risk keywords in domain name
+  keyword_matches: 0.30
+  
+  # Weight for domain age (newly registered domains)
+  age_days: 0.10
+
+# Configuration for high-risk keywords
+high_risk_keywords:
+  - "paypal"
+  - "bank"
+  - "login"
+  - "secure"
+  - "account"
+  - "verify"
+  - "confirm"
+  - "update"
+  - "password"
+  - "signin"
+  - "amazon"
+  - "apple"
+  - "microsoft"
+  - "google"
+  - "facebook"
+  - "instagram"
+  - "twitter"
+  - "sso"
+  - "auth"
+  - "oauth"
+  - "2fa"
+  - "multifactor"
+  - "otp"
+  - "verification"
+
+# Suspicious TLDs that may indicate higher risk
+suspicious_tlds:
+  - ".tk"
+  - ".ml"
+  - ".ga"
+  - ".cf"
+  - ".xyz"
+  - ".top"
+  - ".club"
+  - ".space"
+  - ".info"
+  - ".biz"
+
+# Safe/common TLDs that generally indicate lower risk
+safe_tlds:
+  - ".com"
+  - ".net"
+  - ".org"
+  - ".edu"
+  - ".gov"
+  - ".mil"
+
+# Configuration values
+max_domain_length: 30
+min_entropy_threshold: 3.0
+
+# Risk level thresholds
+risk_levels:
+  low: { min: 0, max: 19 }
+  medium: { min: 20, max: 39 }
+  high: { min: 40, max: 59 }
+  critical: { min: 60, max: 100 }

@@ -1,0 +1,69 @@
+# Provider configuration for DomainSentry
+# Configure which data providers are enabled and their settings
+
+providers:
+  # Certificate Transparency logs from crt.sh
+  crt_sh:
+    enabled: true
+    api_url: "https://crt.sh/"
+    max_results: 100
+    timeout: 30
+    
+  # WHOIS data from whoisxmlapi.com
+  whoisxmlapi:
+    enabled: true
+    api_key: "${WHOISXMLAPI_API_KEY}"  # Use environment variable
+    api_url: "https://www.whoisxmlapi.com/whoisserver/WhoisService"
+    mock: false  # Set to true for development without API key
+    timeout: 30
+    
+  # VirusTotal threat intelligence
+  virustotal:
+    enabled: false  # Optional - enable if you have an API key
+    api_key: "${VIRUSTOTAL_API_KEY}"  # Use environment variable
+    timeout: 30
+    
+  # AbuseIPDB reputation service
+  abuseipdb:
+    enabled: false  # Optional - enable if you have an API key
+    api_key: "${ABUSEIPDB_API_KEY}"  # Use environment variable
+    timeout: 30
+
+# RSS feeds for cyber security news
+rss_feeds:
+  - "https://krebsonsecurity.com/feed/"
+  - "https://www.bleepingcomputer.com/feed/"
+  - "https://feeds.feedburner.com/TheHackersNews"
+  - "https://www.darkreading.com/rss.xml"
+  - "https://threatpost.com/feed/"
+
+# How often to refresh RSS feeds (in minutes)
+rss_refresh_interval: 30
+
+# Maximum number of news items to store per feed
+max_news_items_per_feed: 50
+
+# Domain monitoring settings
+domain_monitoring:
+  # How often to check for new domains (in minutes)
+  check_interval: 5
+  
+  # Number of domains to process in each batch
+  batch_size: 100
+  
+  # Enable automatic enrichment of new domains
+  auto_enrich_new_domains: true
+  
+  # Enable automatic risk analysis of new domains
+  auto_analyze_new_domains: true
+
+# Caching settings
+caching:
+  # Default TTL for cached domain data (in seconds)
+  domain_ttl: 300  # 5 minutes
+  
+  # Default TTL for cached risk analysis (in seconds)
+  risk_analysis_ttl: 1800  # 30 minutes
+  
+  # Default TTL for cached WHOIS data (in seconds)
+  whois_ttl: 7200  # 2 hours
