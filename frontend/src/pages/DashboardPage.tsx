@@ -10,8 +10,8 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
 import { Skeleton } from '../components/ui/skeleton';
-import { domainApi, riskApi } from '../lib/api';
-import { DomainStats, RiskTrend } from '../lib/types';
+import { domainApi, riskApi, feedApi } from '../lib/api';
+import { DomainStats, RiskTrend, NewsFeedItem } from '../lib/types';
 import { RiskChart } from '../components/charts/RiskChart';
 import { TldDistributionChart } from '../components/charts/TldDistributionChart';
 
@@ -35,6 +35,11 @@ export const DashboardPage: React.FC = () => {
       }
       return rawData as RiskTrend;
     }),
+  });
+
+  const { data: newsItems, isLoading: isNewsLoading } = useQuery({
+    queryKey: ['newsFeeds'],
+    queryFn: () => feedApi.getNewsFeeds({ size: 3 }).then(res => res.data.items as NewsFeedItem[]),
   });
 
   const renderStatCard = (title: string, value: string | number, icon: React.ReactNode, color: string) => (
@@ -188,7 +193,7 @@ export const DashboardPage: React.FC = () => {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {isStatsLoading ? (
+              {isNewsLoading ? (
                 <>
                   {[1, 2, 3].map(i => (
                     <div key={i} className="flex items-start space-x-4">
@@ -200,40 +205,40 @@ export const DashboardPage: React.FC = () => {
                     </div>
                   ))}
                 </>
-              ) : stats ? (
-                <>
-                  <div className="flex items-start space-x-4">
-                    <div className="bg-green-100 p-2 rounded-full">
-                      <Activity className="h-5 w-5 text-green-600" />
-                    </div>
-                    <div>
-                      <p className="font-medium">New domain detected</p>
-                      <p className="text-sm text-muted-foreground">example.com registered today</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start space-x-4">
-                    <div className="bg-orange-100 p-2 rounded-full">
-                      <ShieldAlert className="h-5 w-5 text-orange-600" />
-                    </div>
-                    <div>
-                      <p className="font-medium">High risk domain detected</p>
-                      <p className="text-sm text-muted-foreground">suspicious-domain.net scored 85%</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start space-x-4">
+              ) : newsItems && newsItems.length > 0 ? (
+                newsItems.map((item, index) => (
+                  <div key={index} className="flex items-start space-x-4">
                     <div className="bg-blue-100 p-2 rounded-full">
                       <BarChart3 className="h-5 w-5 text-blue-600" />
                     </div>
                     <div>
-                      <p className="font-medium">Risk analysis completed</p>
-                      <p className="text-sm text-muted-foreground">32 domains analyzed in last hour</p>
+                      <p className="font-medium truncate">{item.title}</p>
+                      <p className="text-sm text-muted-foreground">{item.source}</p>
+                      <p className="text-xs text-muted-foreground">{new Date(item.published_at).toLocaleDateString()}</p>
                     </div>
                   </div>
-                </>
-              ) : null}
+                ))
+              ) : (
+                <div className="text-muted-foreground text-center py-8">
+                  No recent news items available
+                </div>
+              )}
             </div>
           </CardContent>
         </Card>
+      </div>
+      
+      {/* Sources and Disclaimer */}
+      <div className="mt-8 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+        <div className="flex flex-wrap justify-center items-center gap-4 mb-3">
+          <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">crt.sh</span>
+          <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">RSS Feeds</span>
+          <span className="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded">WHOIS</span>
+          <span className="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded">VirusTotal</span>
+        </div>
+        <p className="text-sm text-blue-800 text-center">
+          Non-profit OSINT tool. Data from public sources only. Risk scores for research purposes only.
+        </p>
       </div>
     </div>
   );

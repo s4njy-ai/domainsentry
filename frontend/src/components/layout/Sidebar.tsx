@@ -3,9 +3,7 @@ import {
   LayoutDashboard, 
   ShieldAlert, 
   Newspaper, 
-  Search, 
-  BarChart3, 
-  Settings,
+  Search,
   MenuIcon,
   XIcon
 } from 'lucide-react';
@@ -39,16 +37,6 @@ const navItems: NavItem[] = [
     title: "News Feeds",
     href: "/news-feeds",
     icon: Newspaper,
-  },
-  {
-    title: "Analytics",
-    href: "/analytics",
-    icon: BarChart3,
-  },
-  {
-    title: "Settings",
-    href: "/settings",
-    icon: Settings,
   },
 ];
 

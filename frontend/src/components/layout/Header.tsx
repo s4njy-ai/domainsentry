@@ -29,9 +29,6 @@ export const Header: React.FC = () => {
         <BellIcon className="h-5 w-5" />
         <span className="sr-only">Toggle notification</span>
       </Button>
-      <div className="h-8 w-8 rounded-full bg-muted flex items-center justify-center">
-        <span className="text-sm font-medium">Demo</span>
-      </div>
     </header>
   );
 };
