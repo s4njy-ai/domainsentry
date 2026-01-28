@@ -9,11 +9,11 @@ interface RiskChartProps {
 
 export const RiskChart: React.FC<RiskChartProps> = ({ trends }) => {
   // Transform the data to have consistent field names for the chart
-  const chartData = trends.trends.map(item => ({
+  const chartData = trends?.trends?.map(item => ({
     date: item.date,
     risk: item.avg_risk_score,
     count: item.domain_count
-  }));
+  })) || [];
 
   return (
     <div className="h-80">

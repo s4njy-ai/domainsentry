@@ -21,7 +21,7 @@ export const TldDistributionChart: React.FC<TldDistributionChartProps> = ({ limi
   });
 
   useEffect(() => {
-    if (rawData) {
+    if (rawData && Array.isArray(rawData)) {
       // Transform the data for the chart
       const transformedData = rawData.map((item, index) => ({
         name: item.tld || 'Unknown',
@@ -32,6 +32,8 @@ export const TldDistributionChart: React.FC<TldDistributionChartProps> = ({ limi
       }));
       
       setChartData(transformedData);
+    } else {
+      setChartData([]); // Ensure chartData is an empty array if rawData is not valid
     }
   }, [rawData]);
 

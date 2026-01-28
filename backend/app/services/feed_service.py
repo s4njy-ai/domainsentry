@@ -172,7 +172,8 @@ class FeedService:
 
 # Create a simple model for news feed items since I haven't defined it yet
 from sqlalchemy import Column, DateTime, String, Text
-from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy import Column, DateTime, String, Text
+from app.db.guid import GUID
 from app.db.session import Base
 
 
@@ -181,8 +182,9 @@ class NewsFeedItem(Base):
     News feed item model.
     """
     __tablename__ = "news_feed_items"
+    __table_args__ = {'extend_existing': True}
     
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    id = Column(GUID(), primary_key=True, default=uuid.uuid4)
     title = Column(String(500), nullable=False)
     link = Column(String(1000), nullable=False, unique=True)
     description = Column(Text, nullable=True)

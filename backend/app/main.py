@@ -13,7 +13,7 @@ from prometheus_client import make_asgi_app
 from app.api.v1.api import api_router
 from app.core.config import settings
 from app.core.logging import configure_logging
-from app.db.session import engine
+from app.db.session import engine, Base
 from app.metrics.middleware import PrometheusMiddleware
 
 # Configure logging

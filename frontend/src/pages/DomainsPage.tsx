@@ -80,7 +80,7 @@ export const DomainsPage = () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {domainsData.items.map((domain: Domain) => (
+                {domainsData?.items?.map((domain: Domain) => (
                   <TableRow key={domain.id}>
                     <TableCell className="font-medium">
                       <a 

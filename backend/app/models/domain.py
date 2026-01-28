@@ -6,7 +6,7 @@ from datetime import datetime
 from typing import Optional
 
 from sqlalchemy import JSON, Boolean, Column, DateTime, Float, ForeignKey, Integer, String, Text
-from sqlalchemy.dialects.postgresql import UUID
+from app.db.guid import GUID
 from sqlalchemy.orm import relationship
 
 from app.db.session import Base
@@ -18,7 +18,7 @@ class Domain(Base):
     """
     __tablename__ = "domains"
     
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    id = Column(GUID(), primary_key=True, default=uuid.uuid4)
     domain_name = Column(String(255), nullable=False, index=True, unique=True)
     registered_date = Column(DateTime, nullable=True)
     expires_date = Column(DateTime, nullable=True)
@@ -72,8 +72,8 @@ class DomainEnrichment(Base):
     """
     __tablename__ = "domain_enrichments"
     
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    domain_id = Column(UUID(as_uuid=True), ForeignKey("domains.id"), nullable=False, index=True)
+    id = Column(GUID(), primary_key=True, default=uuid.uuid4)
+    domain_id = Column(GUID(), ForeignKey("domains.id"), nullable=False, index=True)
     
     # Enrichment source
     source = Column(String(100), nullable=False)  # whoisxmlapi, virustotal, abuseipdb, etc.
@@ -102,13 +102,13 @@ class DomainScan(Base):
     """
     __tablename__ = "domain_scans"
     
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    domain_id = Column(UUID(as_uuid=True), ForeignKey("domains.id"), nullable=False, index=True)
+    id = Column(GUID(), primary_key=True, default=uuid.uuid4)
+    domain_id = Column(GUID(), ForeignKey("domains.id"), nullable=False, index=True)
     
     # Scan results
     scan_type = Column(String(50), nullable=False)  # full, quick, risk, etc.
     scan_data = Column(JSON, nullable=False)  # Complete scan results
-    previous_scan_id = Column(UUID(as_uuid=True), ForeignKey("domain_scans.id"), nullable=True)
+    previous_scan_id = Column(GUID(), ForeignKey("domain_scans.id"), nullable=True)
     
     # Risk scoring
     risk_score = Column(Float, nullable=False)

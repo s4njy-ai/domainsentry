@@ -6,7 +6,7 @@ from datetime import datetime
 from typing import Optional
 
 from sqlalchemy import Column, DateTime, String, Text
-from sqlalchemy.dialects.postgresql import UUID
+from app.db.guid import GUID
 
 from app.db.session import Base
 
@@ -17,7 +17,7 @@ class NewsFeedItem(Base):
     """
     __tablename__ = "news_feed_items"
     
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    id = Column(GUID(), primary_key=True, default=uuid.uuid4)
     title = Column(String(500), nullable=False)
     link = Column(String(1000), nullable=False, unique=True)
     description = Column(Text, nullable=True)

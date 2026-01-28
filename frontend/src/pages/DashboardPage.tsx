@@ -129,7 +129,7 @@ export const DashboardPage: React.FC = () => {
               <Skeleton className="h-64 w-full" />
             ) : stats && stats.risk_distribution ? (
               <div className="space-y-4">
-                {Object.entries(stats.risk_distribution).map(([level, count]) => (
+                {Object.entries(stats?.risk_distribution || {}).map(([level, count]) => (
                   <div key={level} className="flex items-center justify-between">
                     <div className="flex items-center">
                       <Badge 
@@ -166,7 +166,7 @@ export const DashboardPage: React.FC = () => {
             {isRiskTrendsLoading ? (
               <Skeleton className="h-64 w-full" />
             ) : riskTrends ? (
-              <RiskChart trends={riskTrends} />
+              <RiskChart trends={riskTrends || {period_days: 30, trends: [], updated_at: new Date().toISOString()}} />
             ) : null}
           </CardContent>
         </Card>
@@ -205,7 +205,7 @@ export const DashboardPage: React.FC = () => {
                     </div>
                   ))}
                 </>
-              ) : newsItems && newsItems.length > 0 ? (
+              ) : newsItems && Array.isArray(newsItems) && newsItems.length > 0 ? (
                 newsItems.map((item, index) => (
                   <div key={index} className="flex items-start space-x-4">
                     <div className="bg-blue-100 p-2 rounded-full">

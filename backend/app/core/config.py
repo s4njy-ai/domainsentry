@@ -33,8 +33,8 @@ class Settings(BaseSettings):
     ]
     
     # Database
-    DATABASE_URL: str = "postgresql+asyncpg://postgres:postgres@localhost:5432/domainsentry"
-    CREATE_DB_TABLES: bool = False  # Auto-create tables (use False in production)
+    DATABASE_URL: str = "sqlite+aiosqlite:///./domainsentry.db"
+    CREATE_DB_TABLES: bool = True  # Auto-create tables (use False in production)
     
     # Redis
     REDIS_URL: str = "redis://localhost:6379/0"
